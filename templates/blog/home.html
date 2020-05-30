@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for art in arts %}
+<li>
+    <h2><a href="{{ art.get_absolute_url }}">{{ art.title }}</a></h2>
+    {{ art.summary }}
+    <!-- {% include 'blog/article.html' %} -->
+</li>
+{% empty %}
+    <p>No article yet.</p>
+{% endfor %}
+{% endblock %}

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
+from datetime import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog.apps.BlogConfig',
-    # 'blog',
+    # 'blog.apps.BlogConfig',
+    'bootstrap4',
+    'markdownx',
+    'blog',
+    
 ]
 
 MIDDLEWARE = [
@@ -120,4 +123,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# change this in prod to abs
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Media files (uploaded images and videos)
+MEDIA_URL = '/media/'
+# change this in prod to abs
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+
+# Markdownx markdown editor
+MARKDOWNX_MEDIA_PATH = datetime.now().strftime('markdownx/%Y/%m/%d')
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+]

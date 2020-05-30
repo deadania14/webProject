@@ -15,18 +15,19 @@ from markdownx.utils import markdownify
 from .models import Article, Tag, Category
 
 
-# Create your views here.
-def postlist(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/post_list.html', {'posts' : posts})
+# # Create your views here.
+# def postlist(request):
+#     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+#     return render(request, 'blog/post_list.html', {'posts' : posts})
 
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+# def post_detail(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     return render(request, 'blog/post_detail.html', {'post': post})
 
 def home(request):
     request.session['current_page'] = 'blog'
     art_list = Article.objects.filter(published=True, featured=True)
+    # 7 article per page, the last page with minimum > 3
     paginator = Paginator(art_list, 7, orphans=3)
 
     # Populate tag cloud
@@ -43,7 +44,7 @@ def home(request):
     #print('weights: {}'.format(weight))
     tags = zip(tags, weight)
 
-    # Get all categories
+    # Get all categories| count total of the article for each category.
     categories = Category.objects.annotate(total=Count('article'))
     
     page = request.GET.get('page')
